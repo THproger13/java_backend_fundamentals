@@ -100,6 +100,7 @@ public class MemberService {
         if(memberRepository.login(memberEmail,memberPassword)){
             System.out.println("로그인 성공");
             loginEmail = memberEmail;
+            islogin = true;
         }else {
             System.out.println("로그인 실패");
         }
@@ -107,10 +108,13 @@ public class MemberService {
 
     //로그 아웃
     public void logout() {
-        if(memberRepository.logout()) {
+        if(islogin) {
+            memberRepository.logout();
             System.out.println("로그 아웃 되었습니다.");
             islogin = false;
-       }
+       }else{
+            System.out.println("로그인 해주세요!");
+        }
     }
 
 
