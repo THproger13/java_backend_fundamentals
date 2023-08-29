@@ -13,6 +13,7 @@ public class ClientDTO {
 
     //기본생성자
     public ClientDTO(){
+        this.cid = numCid++;
 
     }
 

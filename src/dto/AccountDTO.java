@@ -8,10 +8,11 @@ public class AccountDTO {
     private long withdraw;
     private String bankingAt;
 
-    private static long numAid = 1L;
+    private static long numAid = 0L;
 
     //기본 생성자
     public AccountDTO(){
+        this.aid = numAid++;
 
     }
     public AccountDTO(String accountNumber, long deposit, long withdraw, String bankingAt){

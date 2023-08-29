@@ -10,7 +10,8 @@ public class BankMain {
     public static void main(String[] args) {
         BankRepository bankRepository = new BankRepository();
 
-        BankService bankService = new BankService();
+        BankService bankService = new BankService(bankRepository);
+
         Scanner sc = new Scanner(System.in);
         boolean runMainProgram = true;
         while (runMainProgram) {
@@ -58,10 +59,10 @@ public class BankMain {
                         System.out.println("1. 계좌 전체 내역 메뉴 2. 입금 내역 메뉴 3. 출금 내역 메뉴" +
                                 "4. 입출금 내역 조회 프로그램 종료\n");
                         System.out.println("=================\n");
-                        System.out.println("출금하려는 계좌를 입력해주세요! : ");
+                        System.out.println("조회하려는 계좌를 입력해주세요! : ");
                         String accountNumber = sc.next();
 
-                        boolean checkaccountresult = bankRepository.cheakaccount(accountNumber);
+                        boolean checkaccountresult = bankRepository.checkaccount(accountNumber);
                         if (checkaccountresult) {
                             System.out.println("메뉴를 입력해 주세요 : \n");
                             int DepositWithdrawProgram = sc.nextInt();
@@ -88,7 +89,6 @@ public class BankMain {
                                 case 4:
                                     System.out.println("입출금 내역 프로그램을 종료합니다.");
                                     runDepositWithdrawProgram = false;
-                                    break;
                             }
                         } else {
                             System.out.println("없는 계좌 입니다.");

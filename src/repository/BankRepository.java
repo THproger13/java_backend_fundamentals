@@ -14,7 +14,10 @@ public class BankRepository {
     List<AccountDTO> accountDTOList = new ArrayList<>();
 
     //계좌번호 중복 체크(여러 기능에서 중복 사용)
-    public boolean cheakaccount(String accountNumber) {
+    public boolean checkaccount(String accountNumber) {
+
+        System.out.println(accountNumber);
+
         for(ClientDTO clientDTO : clientDTOList){
             if(accountNumber.equals(clientDTO.getAccountNumber())){
                 return true;
@@ -24,7 +27,8 @@ public class BankRepository {
     }
     //생성된 계좌 저장
     public boolean accountsave(ClientDTO clientDTO){
-            return clientDTOList.add(clientDTO);
+
+        return clientDTOList.add(clientDTO);
     }
 
     //계좌 일치 여부 확인후 계좌 잔액 반환
@@ -52,6 +56,7 @@ public class BankRepository {
                 accountDTO.setAccountNumber(accountNumber);
                 accountDTO.setBankingAt(bankingAt);
                 accountDTOList.add(accountDTO);
+                break;
             }
         }
     }
@@ -81,6 +86,7 @@ public class BankRepository {
                 }else{
                     System.out.println("잔액이 부족합니다.");
                 }
+                break;
             }
         }
     }
@@ -88,22 +94,26 @@ public class BankRepository {
         return new ArrayList<>(accountDTOList);
     }
 
-    public List<AccountDTO> showDepositHistory() {
-        for(AccountDTO accountDTO : accountDTOList) {
-            if(accountDTO.getWithdraw() == 0) {
-                return new ArrayList<>(accountDTOList);
+    // BankRepository 클래스의 showDepositHistory 메서드 수정
+    public List<AccountDTO> showDepositHistory(String accountNumber) {
+        List<AccountDTO> accountDeposits = new ArrayList<>();
+        for (AccountDTO accountDTO : accountDTOList) {
+            if (accountNumber.equals(accountDTO.getAccountNumber()) && accountDTO.getDeposit() > 0) {
+                accountDeposits.add(accountDTO);
             }
         }
-        return null;
-
+        return accountDeposits.isEmpty() ? null : accountDeposits;
     }
 
-    public List<AccountDTO> showWithdrawHistory() {
-        for(AccountDTO accountDTO : accountDTOList) {
-            if(accountDTO.getDeposit() == 0) {
-                return new ArrayList<>(accountDTOList);
+
+    // BankRepository 클래스의 showWithdrawHistory 메서드 수정
+    public List<AccountDTO> showWithdrawHistory(String accountNumber) {
+        List<AccountDTO> accountWithdraws = new ArrayList<>();
+        for (AccountDTO accountDTO : accountDTOList) {
+            if (accountNumber.equals(accountDTO.getAccountNumber()) && accountDTO.getWithdraw() > 0) {
+                accountWithdraws.add(accountDTO);
             }
         }
-        return null;
+        return accountWithdraws.isEmpty() ? null : accountWithdraws;
     }
 }
